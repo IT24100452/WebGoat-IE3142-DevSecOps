@@ -52,7 +52,7 @@ jobs:
       # Step 4: Save test results as artifacts (visible in GitHub UI)
       - name: Upload test reports
         if: always()  # Run even if tests fail
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: maven-test-reports
           path: "**/target/surefire-reports/**"
@@ -79,7 +79,7 @@ jobs:
           docker run --rm -v "$PWD:/src" semgrep/semgrep semgrep --config /src/.semgrep.yml --json --output /src/reports/semgrep.json /src || true
       # Step 3: Upload the report as a GitHub artifact
       - if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: semgrep-report
           path: reports/semgrep.json
@@ -120,7 +120,7 @@ jobs:
         run: ./mvnw --batch-mode --no-transfer-progress org.owasp:dependency-check-maven:check -DfailBuildOnCVSS=7 -Dformats=HTML,JSON
       # Step 2: Upload reports as artifacts
       - if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dependency-check-reports
           path: "**/target/dependency-check-report.*"
