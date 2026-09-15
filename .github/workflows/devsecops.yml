@@ -96,7 +96,7 @@ jobs:
         with:
           fetch-depth: 0  # Get full history to scan all commits
       # Step 1: Run Gitleaks to find secrets
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub provides this automatically
           GITLEAKS_CONFIG: .gitleaks.toml            # Use our custom Gitleaks rules
