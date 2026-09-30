@@ -8,6 +8,8 @@ FROM docker.io/eclipse-temurin:25-jdk-noble
 LABEL name="WebGoat: A deliberately insecure Web Application"
 LABEL maintainer="WebGoat team"
 
+ARG WEBGOAT_VERSION=2026.4-SNAPSHOT
+
 # Install essential tools and prepare the application user
 RUN \
   # Update package lists
@@ -18,13 +20,12 @@ RUN \
   rm -rf /var/lib/apt/lists/* && \
   # Create a non-root user 'webgoat' for security (containers should not run as root)
   useradd -ms /bin/bash webgoat && \
+  usermod -a -G 0 webgoat && \
   # Create the WebGoat data directory
-  mkdir -p /home/webgoat/.webgoat-2026.2-SNAPSHOT && \
+  mkdir -p /home/webgoat/.webgoat-${WEBGOAT_VERSION} && \
   # Allow group members to access the home directory (for better container security)
   chgrp -R 0 /home/webgoat && \
-  chmod -R g=u /home/webgoat && \
-  # Ensure the data directory is writable
-  chmod 777 /home/webgoat/.webgoat-2026.2-SNAPSHOT
+  chmod -R g=u /home/webgoat
 
 # Switch to the non-root 'webgoat' user for all subsequent commands
 USER webgoat
